@@ -1,9 +1,86 @@
-import { Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Suspense, useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Text, Environment, ContactShadows } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import DinoModel from './DinoModel';
 import portfolioData from '../data/portfolio.json';
+
+// Composant animé pour le fallback
+const AnimatedFallback = () => {
+  const groupRef = useRef();
+  const cube1Ref = useRef();
+  const cube2Ref = useRef();
+  const cube3Ref = useRef();
+
+  useFrame((state, delta) => {
+    // Animation du groupe principal
+    if (groupRef.current) {
+      groupRef.current.rotation.y += delta * 0.3;
+      groupRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.2) * 0.3;
+    }
+    
+    // Animation du cube principal
+    if (cube1Ref.current) {
+      cube1Ref.current.rotation.x += delta * 0.4;
+      cube1Ref.current.rotation.z += delta * 0.2;
+    }
+    
+    // Animation des cubes satellites
+    if (cube2Ref.current) {
+      cube2Ref.current.rotation.x += delta * 0.6;
+      cube2Ref.current.rotation.y += delta * 0.4;
+      cube2Ref.current.position.x = 4 + Math.sin(state.clock.elapsedTime * 2) * 0.5;
+      cube2Ref.current.position.y = 2 + Math.cos(state.clock.elapsedTime * 1.5) * 0.3;
+    }
+    
+    if (cube3Ref.current) {
+      cube3Ref.current.rotation.y += delta * 0.5;
+      cube3Ref.current.rotation.z += delta * 0.3;
+      cube3Ref.current.position.x = -4 + Math.cos(state.clock.elapsedTime * 1.8) * 0.4;
+      cube3Ref.current.position.z = 2 + Math.sin(state.clock.elapsedTime * 2.2) * 0.3;
+    }
+  });
+
+  return (
+    <group ref={groupRef}>
+      {/* Cube principal lumineux */}
+      <mesh ref={cube1Ref} position={[0, 0, 0]}>
+        <boxGeometry args={[3, 3, 3]} />
+        <meshStandardMaterial 
+          color="#ef8d38" 
+          emissive="#ef8d38"
+          emissiveIntensity={0.4}
+          metalness={0.3}
+          roughness={0.2}
+        />
+      </mesh>
+      
+      {/* Petits cubes orbitants */}
+      <mesh ref={cube2Ref} position={[4, 2, 0]}>
+        <boxGeometry args={[0.8, 0.8, 0.8]} />
+        <meshStandardMaterial 
+          color="#4a7c59" 
+          emissive="#4a7c59"
+          emissiveIntensity={0.3}
+        />
+      </mesh>
+      
+      <mesh ref={cube3Ref} position={[-4, -1, 2]}>
+        <boxGeometry args={[0.6, 0.6, 0.6]} />
+        <meshStandardMaterial 
+          color="#2f9960" 
+          emissive="#2f9960"
+          emissiveIntensity={0.3}
+        />
+      </mesh>
+      
+      {/* Éclairage de fallback */}
+      <ambientLight intensity={0.8} />
+      <directionalLight position={[5, 5, 5]} intensity={1.5} />
+      <pointLight position={[0, 3, 0]} intensity={1} color="#ef8d38" />
+    </group>
+  );
+};
 
 const Hero = () => {
   return (
@@ -13,20 +90,24 @@ const Hero = () => {
       
       {/* 3D Scene */}
       <div className="absolute inset-0 canvas-container">
-        <Canvas camera={{ position: [0, 2, 10], fov: 50 }}>
-          <Suspense fallback={null}>
-            {/* Lighting */}
-            <ambientLight intensity={0.4} />
-            <directionalLight position={[10, 10, 5]} intensity={1} />
-            <pointLight position={[-10, -10, -10]} intensity={0.5} />
+        <Canvas camera={{ position: [0, 2, 12], fov: 60 }}>
+          <Suspense fallback={<AnimatedFallback />}>
+            {/* Lighting amélioré pour plus de visibilité */}
+            <ambientLight intensity={0.8} />
+            <directionalLight position={[10, 10, 5]} intensity={1.8} />
+            <directionalLight position={[-10, 10, -5]} intensity={1.2} color="#4a7c59" />
+            <pointLight position={[-10, -10, -10]} intensity={1.2} color="#4a7c59" />
+            <pointLight position={[10, -5, 10]} intensity={1} color="#ef8d38" />
+            <pointLight position={[0, 8, 0]} intensity={1.5} color="#ffffff" />
+            <spotLight position={[0, 15, 0]} angle={0.3} penumbra={1} intensity={2} color="#ef8d38" />
             
             {/* Environment */}
             <Environment preset="sunset" />
             
             {/* 3D Text */}
             <Text
-              position={[0, 4, 0]}
-              fontSize={2}
+              position={[0, 5.5, 0]}
+              fontSize={1.8}
               color="#ef8d38"
               anchorX="center"
               anchorY="middle"
@@ -36,15 +117,15 @@ const Hero = () => {
             </Text>
             
             {/* Dino Model */}
-            <DinoModel position={[0, -1, 0]} />
+            <DinoModel position={[0, -1, 0]} scale={[1.2, 1.2, 1.2]} />
             
-            {/* Ground shadow */}
+            {/* Ground shadow amélioré */}
             <ContactShadows
-              position={[0, -2, 0]}
-              opacity={0.4}
-              scale={10}
-              blur={2}
-              far={4}
+              position={[0, -2.5, 0]}
+              opacity={0.6}
+              scale={15}
+              blur={2.5}
+              far={6}
               color="#000000"
             />
             
@@ -56,7 +137,9 @@ const Hero = () => {
               minPolarAngle={Math.PI / 6}
               maxPolarAngle={Math.PI - Math.PI / 6}
               autoRotate
-              autoRotateSpeed={0.5}
+              autoRotateSpeed={0.3}
+              minDistance={8}
+              maxDistance={20}
             />
           </Suspense>
         </Canvas>
@@ -108,6 +191,21 @@ const Hero = () => {
             >
               Me Contacter
             </button>
+          </motion.div>
+          
+          {/* Note sur le modèle temporaire */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.5 }}
+            className="mt-8"
+          >
+            <div className="inline-flex items-center space-x-2 bg-slate-800/50 backdrop-blur-sm rounded-full px-4 py-2 border border-volcanic-orange-500/20">
+              <div className="w-2 h-2 bg-volcanic-orange-400 rounded-full animate-pulse"></div>
+              <span className="text-gray-400 text-sm">
+                Modèle 3D temporaire - Vraies créations Blender bientôt disponibles
+              </span>
+            </div>
           </motion.div>
         </motion.div>
       </div>

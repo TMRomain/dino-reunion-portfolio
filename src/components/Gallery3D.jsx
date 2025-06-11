@@ -1,7 +1,37 @@
 import { Suspense, useState } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows, Text, Box, Sphere } from '@react-three/drei';
 import { motion } from 'framer-motion';
+import { useRef } from 'react';
+
+// Composant animé pour le fallback de Gallery3D
+const AnimatedGalleryFallback = () => {
+  const cubeRef = useRef();
+
+  useFrame((state, delta) => {
+    if (cubeRef.current) {
+      cubeRef.current.rotation.x += delta * 0.5;
+      cubeRef.current.rotation.y += delta * 0.3;
+      cubeRef.current.position.y = Math.sin(state.clock.elapsedTime * 2) * 0.2;
+      cubeRef.current.scale.setScalar(1 + Math.sin(state.clock.elapsedTime * 3) * 0.1);
+    }
+  });
+
+  return (
+    <group>
+      <mesh ref={cubeRef} position={[0, 0, 0]}>
+        <boxGeometry args={[2, 2, 2]} />
+        <meshStandardMaterial 
+          color="#ef8d38" 
+          emissive="#ef8d38"
+          emissiveIntensity={0.4}
+        />
+      </mesh>
+      <ambientLight intensity={1} />
+      <directionalLight position={[5, 5, 5]} intensity={2} />
+    </group>
+  );
+};
 
 const Gallery3D = () => {
   const [selectedModel, setSelectedModel] = useState(0);
@@ -19,30 +49,73 @@ const Gallery3D = () => {
     
     return (
       <group position={position}>
-        {/* Modèle principal */}
+        {/* Cube principal plus visible et lumineux */}
         <Box
-          args={[2, 3, 1]}
+          args={[2.5, 4, 1.5]}
           onClick={() => setSelectedModel(modelIndex)}
-          scale={isSelected ? 1.2 : 1}
+          scale={isSelected ? 1.3 : 1}
         >
-          <meshStandardMaterial color={model.color} roughness={0.3} metalness={0.1} />
+          <meshStandardMaterial 
+            color={model.color} 
+            roughness={0.2} 
+            metalness={0.4}
+            emissive={model.color}
+            emissiveIntensity={isSelected ? 0.5 : 0.3}
+          />
         </Box>
         
-        {/* Détails supplémentaires */}
-        <Sphere args={[0.3]} position={[0, 2, 0.6]}>
-          <meshStandardMaterial color="#ff4444" emissive="#ff0000" emissiveIntensity={0.3} />
-        </Sphere>
+        {/* Cubes décoratifs lumineux */}
+        <Box args={[0.5, 0.5, 0.5]} position={[1.5, 2.5, 1]}>
+          <meshStandardMaterial 
+            color="#ff4444" 
+            emissive="#ff0000" 
+            emissiveIntensity={0.6}
+          />
+        </Box>
+        
+        <Box args={[0.3, 0.3, 0.3]} position={[-1.2, 3, 0.8]}>
+          <meshStandardMaterial 
+            color="#44ff44" 
+            emissive="#00ff00" 
+            emissiveIntensity={0.7}
+          />
+        </Box>
+        
+        {/* Indication "placeholder" */}
+        <Text
+          position={[0, 3.5, 0]}
+          fontSize={0.25}
+          color="#ef8d38"
+          anchorX="center"
+          anchorY="middle"
+        >
+          PLACEHOLDER
+        </Text>
         
         {/* Nom du modèle */}
         <Text
           position={[0, -2.5, 0]}
-          fontSize={0.3}
-          color="#ffffff"
+          fontSize={0.35}
+          color={isSelected ? "#ef8d38" : "#ffffff"}
           anchorX="center"
           anchorY="middle"
         >
           {model.name}
         </Text>
+        
+        {/* Aura lumineuse autour du modèle sélectionné */}
+        {isSelected && (
+          <mesh position={[0, 1, 0]}>
+            <sphereGeometry args={[3, 16, 16]} />
+            <meshStandardMaterial 
+              color="#ef8d38"
+              transparent
+              opacity={0.15}
+              emissive="#ef8d38"
+              emissiveIntensity={0.2}
+            />
+          </mesh>
+        )}
       </group>
     );
   };
@@ -75,28 +148,29 @@ const Gallery3D = () => {
             viewport={{ once: true }}
             className="h-96 bg-slate-800 rounded-xl overflow-hidden canvas-container"
           >
-            <Canvas camera={{ position: [8, 5, 8], fov: 50 }}>
-              <Suspense fallback={null}>
-                {/* Éclairage */}
-                <ambientLight intensity={0.4} />
-                <directionalLight position={[10, 10, 5]} intensity={1} />
-                <pointLight position={[-10, -10, -10]} intensity={0.5} />
+            <Canvas camera={{ position: [8, 6, 8], fov: 60 }}>
+              <Suspense fallback={<AnimatedGalleryFallback />}>
+                {/* Éclairage amélioré */}
+                <ambientLight intensity={0.6} />
+                <directionalLight position={[10, 10, 5]} intensity={1.5} />
+                <pointLight position={[-10, -10, -10]} intensity={0.8} color="#4a7c59" />
+                <pointLight position={[10, 5, 10]} intensity={0.6} color="#ef8d38" />
                 
                 {/* Environnement */}
                 <Environment preset="forest" />
                 
-                {/* Modèles 3D */}
-                <ModelPlaceholder modelIndex={0} position={[-4, 0, 0]} />
+                {/* Modèles 3D avec meilleur espacement */}
+                <ModelPlaceholder modelIndex={0} position={[-5, 0, 0]} />
                 <ModelPlaceholder modelIndex={1} position={[0, 0, 0]} />
-                <ModelPlaceholder modelIndex={2} position={[4, 0, 0]} />
+                <ModelPlaceholder modelIndex={2} position={[5, 0, 0]} />
                 
-                {/* Ombres */}
+                {/* Ombres améliorées */}
                 <ContactShadows
-                  position={[0, -2, 0]}
-                  opacity={0.4}
-                  scale={20}
-                  blur={2}
-                  far={4}
+                  position={[0, -2.5, 0]}
+                  opacity={0.6}
+                  scale={25}
+                  blur={2.5}
+                  far={6}
                   color="#000000"
                 />
                 
@@ -107,6 +181,10 @@ const Gallery3D = () => {
                   enableRotate={true}
                   minPolarAngle={Math.PI / 6}
                   maxPolarAngle={Math.PI - Math.PI / 6}
+                  autoRotate
+                  autoRotateSpeed={0.2}
+                  minDistance={6}
+                  maxDistance={15}
                 />
               </Suspense>
             </Canvas>
@@ -143,6 +221,27 @@ const Gallery3D = () => {
                     {model.name}
                   </button>
                 ))}
+              </div>
+            </div>
+
+            {/* Message informatif sur les modèles temporaires */}
+            <div className="bg-gradient-to-r from-volcanic-orange-500/10 to-forest-green-500/10 rounded-xl p-6 border border-volcanic-orange-500/30">
+              <div className="flex items-center space-x-3 mb-3">
+                <div className="w-8 h-8 bg-volcanic-orange-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">!</span>
+                </div>
+                <h4 className="text-lg font-semibold text-volcanic-orange-400">
+                  Modèles 3D en cours de préparation
+                </h4>
+              </div>
+              <p className="text-gray-300 text-sm leading-relaxed">
+                Les modèles affichés sont des <strong>placeholders temporaires</strong>. 
+                Les véritables créations 3D d'Emmanuel (mobilier, environnements réunionnais, animations éducatives) 
+                seront intégrées prochainement depuis ses fichiers Blender.
+              </p>
+              <div className="mt-4 flex items-center space-x-2">
+                <div className="w-2 h-2 bg-volcanic-orange-400 rounded-full animate-pulse"></div>
+                <span className="text-gray-400 text-xs">Modèles 3D professionnels bientôt disponibles</span>
               </div>
             </div>
 
