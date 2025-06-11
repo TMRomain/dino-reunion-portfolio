@@ -1,0 +1,47 @@
+{
+  "personal": {
+    "name": "Emmanuel Latchoumanin",
+    "title": "Infographiste 3D",
+    "specialty": "Animation 3D & Synthèse d'image",
+    "address": "84 A Rue Leconte de Liste, Roche Maigre, 97450 Saint-Louis, La Réunion",
+    "phone": "+262 693 648 563",
+    "email": "latchoumanin.emmanuel450@gmail.com"
+  },
+  "education": [
+    {
+      "years": "2018–2022",
+      "institution": "Cégep de Matane",
+      "location": "Matane, Québec",
+      "program": "Techniques d'Animation 3D & Synthèse d'image"
+    },
+    {
+      "years": "2018",
+      "institution": "Saint-Louis, La Réunion",
+      "program": "Baccalauréat STMG – Sciences et Technologies du Management et de la Gestion"
+    }
+  ],
+  "experience": [
+    {
+      "years": "2022–2023",
+      "organization": "Association Ti Planteur",
+      "location": "La Réunion",
+      "tasks": [
+        "Conception de plans 3D de mobilier",
+        "Animation d'ateliers éducatifs sur la biodiversité dans les écoles",
+        "Sensibilisation à l'environnement et promotion de la plantation réunionnaise"
+      ]
+    }
+  ],
+  "skills": {
+    "software": ["Blender", "Krita", "Photoshop"],
+    "soft": ["Compréhension client", "Traduction d'idées en concepts visuels", "Collaboration", "Communication"]
+  },
+  "qualities": ["Calme", "À l'écoute", "Organisé", "Adaptable", "Créatif", "Autonome"],
+  "interests": ["Plage", "Musique", "Dessin", "Sport"],
+  "stats": {
+    "projectsCompleted": "15+",
+    "yearsExperience": "4",
+    "softwareMastery": "3",
+    "clientSatisfaction": "100%"
+  }
+}
