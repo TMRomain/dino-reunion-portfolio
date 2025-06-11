@@ -1,4 +1,4 @@
-import { Suspense, useRef } from 'react';
+import { Suspense, useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Text, Environment, ContactShadows } from '@react-three/drei';
 import { motion } from 'framer-motion';
@@ -83,139 +83,157 @@ const AnimatedFallback = () => {
 };
 
 const Hero = () => {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
   return (
-    <section id="accueil" className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section id="accueil" className="relative min-h-screen overflow-hidden w-full max-w-full">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
       
-      {/* 3D Scene */}
-      <div className="absolute inset-0 canvas-container">
-        <Canvas camera={{ position: [0, 2, 12], fov: 60 }}>
-          <Suspense fallback={<AnimatedFallback />}>
-            {/* Lighting amélioré pour plus de visibilité */}
-            <ambientLight intensity={0.8} />
-            <directionalLight position={[10, 10, 5]} intensity={1.8} />
-            <directionalLight position={[-10, 10, -5]} intensity={1.2} color="#4a7c59" />
-            <pointLight position={[-10, -10, -10]} intensity={1.2} color="#4a7c59" />
-            <pointLight position={[10, -5, 10]} intensity={1} color="#ef8d38" />
-            <pointLight position={[0, 8, 0]} intensity={1.5} color="#ffffff" />
-            <spotLight position={[0, 15, 0]} angle={0.3} penumbra={1} intensity={2} color="#ef8d38" />
-            
-            {/* Environment */}
-            <Environment preset="sunset" />
-            
-            {/* 3D Text */}
-            <Text
-              position={[0, 5.5, 0]}
-              fontSize={1.8}
-              color="#ef8d38"
-              anchorX="center"
-              anchorY="middle"
-              font="/fonts/Inter-Bold.woff"
-            >
-              {portfolioData.personal.name.toUpperCase()}
-            </Text>
-            
-            {/* Dino Model */}
-            <DinoModel position={[0, -1, 0]} scale={[1.2, 1.2, 1.2]} />
-            
-            {/* Ground shadow amélioré */}
-            <ContactShadows
-              position={[0, -2.5, 0]}
-              opacity={0.6}
-              scale={15}
-              blur={2.5}
-              far={6}
-              color="#000000"
-            />
-            
-            {/* Camera controls */}
-            <OrbitControls
-              enablePan={false}
-              enableZoom={true}
-              enableRotate={true}
-              minPolarAngle={Math.PI / 6}
-              maxPolarAngle={Math.PI - Math.PI / 6}
-              autoRotate
-              autoRotateSpeed={0.3}
-              minDistance={8}
-              maxDistance={20}
-            />
-          </Suspense>
-        </Canvas>
-      </div>
-
-      {/* Content overlay */}
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="space-y-6"
-        >
-          <motion.h1
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            className="text-4xl md:text-6xl font-bold text-white mb-4"
-          >
-            {portfolioData.personal.title} <span className="text-volcanic-orange-400">3D</span>
-          </motion.h1>
-          
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto"
-          >
-            Spécialisé en {portfolioData.personal.specialty}. 
-            Passionné par la création de mondes virtuels et l'animation de personnages 3D 
-            depuis l'île de La Réunion.
-          </motion.p>
-          
+      {/* Layout container - Stack on mobile, side by side on desktop */}
+      <div className="relative z-10 h-screen flex flex-col lg:flex-row w-full max-w-full overflow-hidden">
+        
+        {/* Content section */}
+        <div className="flex-1 flex items-center justify-center px-4 py-8 lg:py-16 w-full max-w-full">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.1 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            transition={{ duration: 1, delay: 0.5 }}
+            className="text-center max-w-2xl w-full"
           >
-            <button 
-              onClick={() => document.getElementById('galerie').scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-3 bg-volcanic-orange-500 hover:bg-volcanic-orange-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+            <motion.h1
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+              className="text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-4"
             >
-              Voir la Galerie
-            </button>
-            <button 
-              onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-3 border-2 border-forest-green-500 text-forest-green-400 hover:bg-forest-green-500 hover:text-white font-semibold rounded-lg transition-all duration-300"
+              {portfolioData.personal.title} <span className="text-volcanic-orange-400">3D</span>
+            </motion.h1>
+            
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
+              className="text-base md:text-lg lg:text-xl text-gray-300 mb-6 lg:mb-8"
             >
-              Me Contacter
-            </button>
+              Spécialisé en {portfolioData.personal.specialty}. 
+              Passionné par la création de mondes virtuels et l'animation de personnages 3D 
+              depuis l'île de La Réunion.
+            </motion.p>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.1 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center mb-6"
+            >
+              <button 
+                onClick={() => document.getElementById('galerie').scrollIntoView({ behavior: 'smooth' })}
+                className="px-6 lg:px-8 py-2 lg:py-3 bg-volcanic-orange-500 hover:bg-volcanic-orange-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 text-sm lg:text-base"
+              >
+                Voir la Galerie
+              </button>
+              <button 
+                onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
+                className="px-6 lg:px-8 py-2 lg:py-3 border-2 border-forest-green-500 text-forest-green-400 hover:bg-forest-green-500 hover:text-white font-semibold rounded-lg transition-all duration-300 text-sm lg:text-base"
+              >
+                Me Contacter
+              </button>
+            </motion.div>
+            
+            {/* Note sur le modèle temporaire */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 1.5 }}
+              className="mt-4 lg:mt-8"
+            >
+              <div className="inline-flex items-center space-x-2 bg-slate-800/50 backdrop-blur-sm rounded-full px-3 py-1 lg:px-4 lg:py-2 border border-volcanic-orange-500/20">
+                <div className="w-2 h-2 bg-volcanic-orange-400 rounded-full animate-pulse"></div>
+                <span className="text-gray-400 text-xs lg:text-sm">
+                  Modèle 3D temporaire - Vraies créations Blender bientôt disponibles
+                </span>
+              </div>
+            </motion.div>
           </motion.div>
-          
-          {/* Note sur le modèle temporaire */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.5 }}
-            className="mt-8"
-          >
-            <div className="inline-flex items-center space-x-2 bg-slate-800/50 backdrop-blur-sm rounded-full px-4 py-2 border border-volcanic-orange-500/20">
-              <div className="w-2 h-2 bg-volcanic-orange-400 rounded-full animate-pulse"></div>
-              <span className="text-gray-400 text-sm">
-                Modèle 3D temporaire - Vraies créations Blender bientôt disponibles
-              </span>
-            </div>
-          </motion.div>
-        </motion.div>
+        </div>
+
+        {/* 3D Scene section */}
+        <div className="flex-1 relative min-h-[50vh] lg:min-h-0 w-full max-w-full overflow-hidden">
+          <Canvas camera={{ position: [0, 2, 12], fov: 60 }} className="w-full h-full">
+            <Suspense fallback={<AnimatedFallback />}>
+              {/* Lighting amélioré pour plus de visibilité */}
+              <ambientLight intensity={0.8} />
+              <directionalLight position={[10, 10, 5]} intensity={1.8} />
+              <directionalLight position={[-10, 10, -5]} intensity={1.2} color="#4a7c59" />
+              <pointLight position={[-10, -10, -10]} intensity={1.2} color="#4a7c59" />
+              <pointLight position={[10, -5, 10]} intensity={1} color="#ef8d38" />
+              <pointLight position={[0, 8, 0]} intensity={1.5} color="#ffffff" />
+              <spotLight position={[0, 15, 0]} angle={0.3} penumbra={1} intensity={2} color="#ef8d38" />
+              
+              {/* Environment */}
+              <Environment preset="sunset" />
+              
+              {/* 3D Text - Hide on mobile, show on desktop */}
+              <Text
+                position={[0, 5.5, 0]}
+                fontSize={1.8}
+                color="#ef8d38"
+                anchorX="center"
+                anchorY="middle"
+                font="/fonts/Inter-Bold.woff"
+                visible={isDesktop}
+              >
+                {portfolioData.personal.name.toUpperCase()}
+              </Text>
+              
+              {/* Dino Model */}
+              <DinoModel position={[0, -1, 0]} scale={[1.2, 1.2, 1.2]} />
+              
+              {/* Ground shadow amélioré */}
+              <ContactShadows
+                position={[0, -2.5, 0]}
+                opacity={0.6}
+                scale={15}
+                blur={2.5}
+                far={6}
+                color="#000000"
+              />
+              
+              {/* Camera controls */}
+              <OrbitControls
+                enablePan={false}
+                enableZoom={true}
+                enableRotate={true}
+                minPolarAngle={Math.PI / 6}
+                maxPolarAngle={Math.PI - Math.PI / 6}
+                autoRotate
+                autoRotateSpeed={0.3}
+                minDistance={8}
+                maxDistance={20}
+              />
+            </Suspense>
+          </Canvas>
+        </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator - Only show on desktop */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 2 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden lg:block"
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}
