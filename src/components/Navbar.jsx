@@ -24,35 +24,6 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
 
-  // Animation pour chaque lettre
-  const AnimatedText = ({ text, className = "", delay = 0 }) => {
-    return (
-      <span className={className}>
-        {text.split('').map((char, index) => (
-          <motion.span
-            key={index}
-            initial={{ opacity: 0, y: 20, rotateX: -90 }}
-            animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            transition={{
-              duration: 0.6,
-              delay: delay + index * 0.1,
-              ease: "easeOut"
-            }}
-            whileHover={{
-              y: -3,
-              color: "#f97316",
-              transition: { duration: 0.2 }
-            }}
-            className="inline-block"
-            style={{ transformOrigin: "center bottom" }}
-          >
-            {char === ' ' ? '\u00A0' : char}
-          </motion.span>
-        ))}
-      </span>
-    );
-  };
-
   return (
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
@@ -74,16 +45,8 @@ const Navbar = () => {
             <div className="w-8 h-8 bg-gradient-to-br from-volcanic-orange-500 to-forest-green-500 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg"></span>
             </div>
-            <AnimatedText 
-              text={portfolioData.personal.name} 
-              className="text-white font-bold text-xl hidden sm:block"
-              delay={0.3}
-            />
-            <AnimatedText 
-              text="Emmanuel" 
-              className="text-white font-bold text-lg sm:hidden"
-              delay={0.3}
-            />
+            <span className="text-white font-bold text-xl hidden sm:block">{portfolioData.personal.name}</span>
+            <span className="text-white font-bold text-lg sm:hidden">Emmanuel</span>
           </motion.div>
 
           {/* Desktop Menu */}
