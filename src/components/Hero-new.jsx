@@ -82,35 +82,10 @@ const FloatingCubes = () => {
         <meshStandardMaterial color="#1e293b" />
       </mesh>
       
-      {/* Éclairage plus lumineux */}
-      <ambientLight intensity={0.8} color="#ffffff" />
-      <directionalLight 
-        position={[10, 10, 5]} 
-        intensity={2.0} 
-        color="#ffffff"
-      />
-      <pointLight 
-        position={[-8, 5, 8]} 
-        intensity={1.5} 
-        color="#ef8d38" 
-        distance={25}
-        decay={1.5}
-      />
-      <pointLight 
-        position={[8, -5, -8]} 
-        intensity={1.2} 
-        color="#4a7c59" 
-        distance={20}
-        decay={1.5}
-      />
-      <spotLight
-        position={[0, 15, 0]}
-        angle={0.5}
-        penumbra={0.2}
-        intensity={1.5}
-        color="#ffffff"
-        target-position={[0, 0, 0]}
-      />
+      {/* Éclairage simple */}
+      <ambientLight intensity={0.6} />
+      <directionalLight position={[5, 5, 5]} intensity={0.8} />
+      <pointLight position={[-5, -5, 5]} intensity={0.5} color="#ef8d38" />
     </group>
   );
 };
