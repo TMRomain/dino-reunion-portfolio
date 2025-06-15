@@ -8,6 +8,12 @@ import boxPreview from '/assets/portfolio/Annexe/box_preview.png';
 import cyclingPreview from '/assets/portfolio/Annexe/cyclingPreview.png';
 import carPreview from '/assets/portfolio/Annexe/CarAnimPreview.png';
 
+// Fonction utilitaire pour construire les chemins d'assets
+const getAssetPath = (path) => {
+  const base = import.meta.env.BASE_URL || '/';
+  return base + path.replace(/^\//, '');
+};
+
 const VideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
@@ -20,7 +26,7 @@ const VideoSection = () => {
       title: 'Animation Feu de Camp - Environnement 3D',
       description: 'Animation d\'un feu de camp réalisée dans le cadre de projets éducatifs sur l\'environnement',
       thumbnail: campfirePreview,
-      videoSrc: '/assets/portfolio/Annexe/CampfireVideo.mp4',
+      videoSrc: getAssetPath('assets/portfolio/Annexe/CampfireVideo.mp4'),
       duration: '0:45',
     },
     {
@@ -28,7 +34,7 @@ const VideoSection = () => {
       title: 'Modélisation 3D - Boîte Interactive',
       description: 'Conception et animation d\'une boîte 3D avec interactions dynamiques',
       thumbnail: boxPreview,
-      videoSrc: '/assets/portfolio/Annexe/boxe.mp4',
+      videoSrc: getAssetPath('assets/portfolio/Annexe/boxe.mp4'),
       duration: '1:20',
     },
     {
@@ -36,7 +42,7 @@ const VideoSection = () => {
       title: 'Animation Cyclisme - Mouvement Réaliste',
       description: 'Animation de personnage en cyclisme avec attention aux détails de mouvement',
       thumbnail: cyclingPreview,
-      videoSrc: '/assets/portfolio/Annexe/cycling.mp4',
+      videoSrc: getAssetPath('assets/portfolio/Annexe/cycling.mp4'),
       duration: '2:10',
     },
     {
@@ -44,7 +50,7 @@ const VideoSection = () => {
       title: 'Animation Véhicule - Séquence Dynamique',
       description: 'Animation de véhicule avec effets visuels et mouvements fluides',
       thumbnail: carPreview,
-      videoSrc: '/assets/portfolio/Annexe/car_animation_0000.mp4',
+      videoSrc: getAssetPath('assets/portfolio/Annexe/car_animation_0000.mp4'),
       duration: '1:30',
     },
   ];
