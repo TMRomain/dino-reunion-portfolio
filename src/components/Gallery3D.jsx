@@ -2,6 +2,24 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ZoomIn } from 'lucide-react';
 
+// Import des images du portfolio
+import render1Robot from '/assets/portfolio/render1_robot.png';
+import untitledRobot from '/assets/portfolio/untitled.png';
+import carAnimPreview from '/assets/portfolio/Annexe/CarAnimPreview.png';
+import boxPreview from '/assets/portfolio/Annexe/box_preview.png';
+import campfirePreview from '/assets/portfolio/Annexe/campfire_preview.png';
+import cyclingPreview from '/assets/portfolio/Annexe/cyclingPreview.png';
+import enviPreview from '/assets/portfolio/Annexe/envi.png';
+import creatureFinal from '/assets/portfolio/Creature/final.png';
+import creatureUntitled3 from '/assets/portfolio/Creature/untitled3.png';
+import creatureUntitled6 from '/assets/portfolio/Creature/untitled6.png';
+import vf2Image from '/assets/images/vf2.png';
+import vf21Image from '/assets/images/vf2.1.png';
+import untitled1Image from '/assets/images/untitled1.png';
+import untitled2Image from '/assets/images/untitled2.png';
+import image1 from '/assets/images/1.png';
+import image4 from '/assets/images/4.png';
+
 const Gallery3D = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -10,13 +28,13 @@ const Gallery3D = () => {
   const portfolioImages = {
     robot: [
       {
-        src: '/assets/portfolio/render1_robot.png',
+        src: render1Robot,
         title: 'Rendu Robot 3D',
         description: 'Modélisation et rendu 3D d\'un robot',
         category: 'robot'
       },
       {
-        src: '/assets/portfolio/untitled.png',
+        src: untitledRobot,
         title: 'Projet Robot',
         description: 'Étude conceptuelle de robot',
         category: 'robot'
@@ -24,31 +42,31 @@ const Gallery3D = () => {
     ],
     annexe: [
       {
-        src: '/assets/portfolio/Annexe/CarAnimPreview.png',
+        src: carAnimPreview,
         title: 'Animation Véhicule',
         description: 'Preview de l\'animation de voiture 3D',
         category: 'annexe'
       },
       {
-        src: '/assets/portfolio/Annexe/box_preview.png',
+        src: boxPreview,
         title: 'Boîte Interactive',
         description: 'Modélisation 3D d\'une boîte interactive',
         category: 'annexe'
       },
       {
-        src: '/assets/portfolio/Annexe/campfire_preview.png',
+        src: campfirePreview,
         title: 'Feu de Camp',
         description: 'Environnement 3D avec feu de camp',
         category: 'annexe'
       },
       {
-        src: '/assets/portfolio/Annexe/cyclingPreview.png',
+        src: cyclingPreview,
         title: 'Animation Cyclisme',
         description: 'Animation de personnage en cyclisme',
         category: 'annexe'
       },
       {
-        src: '/assets/portfolio/Annexe/envi.png',
+        src: enviPreview,
         title: 'Environnement',
         description: 'Création d\'environnement 3D',
         category: 'annexe'
@@ -56,19 +74,19 @@ const Gallery3D = () => {
     ],
     creature: [
       {
-        src: '/assets/portfolio/Creature/final.png',
+        src: creatureFinal,
         title: 'Créature Finale',
         description: 'Rendu final d\'une créature 3D',
         category: 'creature'
       },
       {
-        src: '/assets/portfolio/Creature/untitled3.png',
+        src: creatureUntitled3,
         title: 'Concept Créature 1',
         description: 'Étude conceptuelle de créature',
         category: 'creature'
       },
       {
-        src: '/assets/portfolio/Creature/untitled6.png',
+        src: creatureUntitled6,
         title: 'Concept Créature 2',
         description: 'Variation de design de créature',
         category: 'creature'
@@ -76,37 +94,37 @@ const Gallery3D = () => {
     ],
     tiplanteur: [
       {
-        src: '/assets/images/vf2.png',
+        src: vf2Image,
         title: 'Mobilier Ti Planteur V2',
         description: 'Plans 3D de mobilier pour l\'Association Ti Planteur',
         category: 'tiplanteur'
       },
       {
-        src: '/assets/images/vf2.1.png',
+        src: vf21Image,
         title: 'Mobilier Ti Planteur V2.1',
         description: 'Version améliorée des plans de mobilier',
         category: 'tiplanteur'
       },
       {
-        src: '/assets/images/untitled1.png',
+        src: untitled1Image,
         title: 'Concept Initial',
         description: 'Première ébauche des concepts de mobilier',
         category: 'tiplanteur'
       },
       {
-        src: '/assets/images/untitled2.png',
+        src: untitled2Image,
         title: 'Étude Conceptuelle',
         description: 'Développement des idées de design',
         category: 'tiplanteur'
       },
       {
-        src: '/assets/images/1.png',
+        src: image1,
         title: 'Design Final 1',
         description: 'Finalisation du premier design de mobilier',
         category: 'tiplanteur'
       },
       {
-        src: '/assets/images/4.png',
+        src: image4,
         title: 'Design Final 4',
         description: 'Quatrième variation du design de mobilier',
         category: 'tiplanteur'
