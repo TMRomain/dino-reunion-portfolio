@@ -10,13 +10,13 @@ const Gallery3D = () => {
   const portfolioImages = {
     robot: [
       {
-        src: '/dino-reunion-portfolio/assets/portfolio/render1_robot.png',
+        src: '/assets/portfolio/render1_robot.png',
         title: 'Rendu Robot 3D',
         description: 'Modélisation et rendu 3D d\'un robot',
         category: 'robot'
       },
       {
-        src: '/dino-reunion-portfolio/assets/portfolio/untitled.png',
+        src: '/assets/portfolio/untitled.png',
         title: 'Projet Robot',
         description: 'Étude conceptuelle de robot',
         category: 'robot'
@@ -24,31 +24,31 @@ const Gallery3D = () => {
     ],
     annexe: [
       {
-        src: '/dino-reunion-portfolio/assets/portfolio/Annexe/CarAnimPreview.png',
+        src: '/assets/portfolio/Annexe/CarAnimPreview.png',
         title: 'Animation Véhicule',
         description: 'Preview de l\'animation de voiture 3D',
         category: 'annexe'
       },
       {
-        src: '/dino-reunion-portfolio/assets/portfolio/Annexe/box_preview.png',
+        src: '/assets/portfolio/Annexe/box_preview.png',
         title: 'Boîte Interactive',
         description: 'Modélisation 3D d\'une boîte interactive',
         category: 'annexe'
       },
       {
-        src: '/dino-reunion-portfolio/assets/portfolio/Annexe/campfire_preview.png',
+        src: '/assets/portfolio/Annexe/campfire_preview.png',
         title: 'Feu de Camp',
         description: 'Environnement 3D avec feu de camp',
         category: 'annexe'
       },
       {
-        src: '/dino-reunion-portfolio/assets/portfolio/Annexe/cyclingPreview.png',
+        src: '/assets/portfolio/Annexe/cyclingPreview.png',
         title: 'Animation Cyclisme',
         description: 'Animation de personnage en cyclisme',
         category: 'annexe'
       },
       {
-        src: '/dino-reunion-portfolio/assets/portfolio/Annexe/envi.png',
+        src: '/assets/portfolio/Annexe/envi.png',
         title: 'Environnement',
         description: 'Création d\'environnement 3D',
         category: 'annexe'
@@ -56,19 +56,19 @@ const Gallery3D = () => {
     ],
     creature: [
       {
-        src: '/dino-reunion-portfolio/assets/portfolio/Creature/final.png',
+        src: '/assets/portfolio/Creature/final.png',
         title: 'Créature Finale',
         description: 'Rendu final d\'une créature 3D',
         category: 'creature'
       },
       {
-        src: '/dino-reunion-portfolio/assets/portfolio/Creature/untitled3.png',
+        src: '/assets/portfolio/Creature/untitled3.png',
         title: 'Concept Créature 1',
         description: 'Étude conceptuelle de créature',
         category: 'creature'
       },
       {
-        src: '/dino-reunion-portfolio/assets/portfolio/Creature/untitled6.png',
+        src: '/assets/portfolio/Creature/untitled6.png',
         title: 'Concept Créature 2',
         description: 'Variation de design de créature',
         category: 'creature'
@@ -76,37 +76,37 @@ const Gallery3D = () => {
     ],
     tiplanteur: [
       {
-        src: '/dino-reunion-portfolio/assets/images/vf2.png',
+        src: '/assets/images/vf2.png',
         title: 'Mobilier Ti Planteur V2',
         description: 'Plans 3D de mobilier pour l\'Association Ti Planteur',
         category: 'tiplanteur'
       },
       {
-        src: '/dino-reunion-portfolio/assets/images/vf2.1.png',
+        src: '/assets/images/vf2.1.png',
         title: 'Mobilier Ti Planteur V2.1',
         description: 'Version améliorée des plans de mobilier',
         category: 'tiplanteur'
       },
       {
-        src: '/dino-reunion-portfolio/assets/images/untitled1.png',
+        src: '/assets/images/untitled1.png',
         title: 'Concept Initial',
         description: 'Première ébauche des concepts de mobilier',
         category: 'tiplanteur'
       },
       {
-        src: '/dino-reunion-portfolio/assets/images/untitled2.png',
+        src: '/assets/images/untitled2.png',
         title: 'Étude Conceptuelle',
         description: 'Développement des idées de design',
         category: 'tiplanteur'
       },
       {
-        src: '/dino-reunion-portfolio/assets/images/1.png',
+        src: '/assets/images/1.png',
         title: 'Design Final 1',
         description: 'Finalisation du premier design de mobilier',
         category: 'tiplanteur'
       },
       {
-        src: '/dino-reunion-portfolio/assets/images/4.png',
+        src: '/assets/images/4.png',
         title: 'Design Final 4',
         description: 'Quatrième variation du design de mobilier',
         category: 'tiplanteur'

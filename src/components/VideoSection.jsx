@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import { Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
 
 // Import des previews d'images pour les thumbnails
-import campfirePreview from '/dino-reunion-portfolio/assets/portfolio/Annexe/campfire_preview.png';
-import boxPreview from '/dino-reunion-portfolio/assets/portfolio/Annexe/box_preview.png';
-import cyclingPreview from '/dino-reunion-portfolio/assets/portfolio/Annexe/cyclingPreview.png';
-import carPreview from '/dino-reunion-portfolio/assets/portfolio/Annexe/CarAnimPreview.png';
+import campfirePreview from '/assets/portfolio/Annexe/campfire_preview.png';
+import boxPreview from '/assets/portfolio/Annexe/box_preview.png';
+import cyclingPreview from '/assets/portfolio/Annexe/cyclingPreview.png';
+import carPreview from '/assets/portfolio/Annexe/CarAnimPreview.png';
 
 const VideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -20,7 +20,7 @@ const VideoSection = () => {
       title: 'Animation Feu de Camp - Environnement 3D',
       description: 'Animation d\'un feu de camp réalisée dans le cadre de projets éducatifs sur l\'environnement',
       thumbnail: campfirePreview,
-      videoSrc: '/dino-reunion-portfolio/assets/portfolio/Annexe/CampfireVideo.mp4',
+      videoSrc: '/assets/portfolio/Annexe/CampfireVideo.mp4',
       duration: '0:45',
     },
     {
@@ -28,7 +28,7 @@ const VideoSection = () => {
       title: 'Modélisation 3D - Boîte Interactive',
       description: 'Conception et animation d\'une boîte 3D avec interactions dynamiques',
       thumbnail: boxPreview,
-      videoSrc: '/dino-reunion-portfolio/assets/portfolio/Annexe/boxe.mp4',
+      videoSrc: '/assets/portfolio/Annexe/boxe.mp4',
       duration: '1:20',
     },
     {
@@ -36,7 +36,7 @@ const VideoSection = () => {
       title: 'Animation Cyclisme - Mouvement Réaliste',
       description: 'Animation de personnage en cyclisme avec attention aux détails de mouvement',
       thumbnail: cyclingPreview,
-      videoSrc: '/dino-reunion-portfolio/assets/portfolio/Annexe/cycling.mp4',
+      videoSrc: '/assets/portfolio/Annexe/cycling.mp4',
       duration: '2:10',
     },
     {
@@ -44,7 +44,7 @@ const VideoSection = () => {
       title: 'Animation Véhicule - Séquence Dynamique',
       description: 'Animation de véhicule avec effets visuels et mouvements fluides',
       thumbnail: carPreview,
-      videoSrc: '/dino-reunion-portfolio/assets/portfolio/Annexe/car_animation_0000.mp4',
+      videoSrc: '/assets/portfolio/Annexe/car_animation_0000.mp4',
       duration: '1:30',
     },
   ];
