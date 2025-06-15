@@ -2,6 +2,11 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
 
+// Import des images
+import imageVf2 from '/assets/images/vf2.png';
+import imageUntitled1 from '/assets/images/untitled1.png';
+import imageVf21 from '/assets/images/vf2.1.png';
+
 const VideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
@@ -12,21 +17,21 @@ const VideoSection = () => {
       id: 1,
       title: 'Mobilier 3D - Association Ti Planteur',
       description: 'Présentation des plans 3D de mobilier conçus pour l\'association',
-      thumbnail: '/assets/images/mobilier-3d-thumb.jpg',
+      thumbnail: imageVf2,
       duration: '2:15',
     },
     {
       id: 2,
-      title: 'Animation éducative - Biodiversité',
-      description: 'Animation pédagogique sur la faune et flore réunionnaise',
-      thumbnail: '/assets/images/biodiversite-anim-thumb.jpg',
+      title: 'Concepts et Développement',
+      description: 'Processus de création et évolution des designs',
+      thumbnail: imageUntitled1,
       duration: '3:20',
     },
     {
       id: 3,
-      title: 'Environnements 3D - La Réunion',
-      description: 'Reconstitution 3D des paysages emblématiques de l\'île',
-      thumbnail: '/assets/images/paysages-3d-thumb.jpg',
+      title: 'Finalisation des Projets',
+      description: 'Versions finales et détails techniques des créations',
+      thumbnail: imageVf21,
       duration: '1:45',
     },
   ];
@@ -70,8 +75,16 @@ const VideoSection = () => {
             className="lg:col-span-2"
           >
             <div className="relative bg-slate-800 rounded-xl overflow-hidden shadow-2xl">
-              {/* Placeholder vidéo */}
-              <div className="aspect-video bg-gradient-to-br from-volcanic-orange-900 to-forest-green-900 flex items-center justify-center relative">
+              {/* Placeholder vidéo avec vraie image */}
+              <div className="aspect-video bg-gradient-to-br from-volcanic-orange-900 to-forest-green-900 flex items-center justify-center relative overflow-hidden">
+                <img
+                  src={selectedVideo.thumbnail}
+                  alt={selectedVideo.title}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
                 <div className="absolute inset-0 bg-black/30" />
                 <motion.button
                   whileHover={{ scale: 1.1 }}
@@ -137,9 +150,22 @@ const VideoSection = () => {
                     : 'bg-slate-800 hover:bg-slate-700'
                 }`}
               >
-                <div className="aspect-video bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center relative">
-                  <Play size={24} className="text-white/70" />
-                  <div className="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
+                <div className="aspect-video bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center relative overflow-hidden">
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
+                    }}
+                  />
+                  <div className="hidden w-full h-full items-center justify-center">
+                    <Play size={24} className="text-white/70" />
+                  </div>
+                  <div className="absolute inset-0 bg-black/20" />
+                  <Play size={24} className="text-white/90 relative z-10" />
+                  <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
                     {video.duration}
                   </div>
                 </div>

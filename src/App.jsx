@@ -2,6 +2,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Gallery3D from './components/Gallery3D';
+import TiPlanteurGallery from './components/TiPlanteurGallery';
 import VideoSection from './components/VideoSection';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -14,6 +15,7 @@ function App() {
         <Hero />
         <About />
         <Gallery3D />
+        <TiPlanteurGallery />
         <VideoSection />
         <Contact />
       </main>
