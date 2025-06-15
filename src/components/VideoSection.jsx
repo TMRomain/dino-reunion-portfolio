@@ -1,49 +1,87 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
 
-// Import des images
-import imageVf2 from '/assets/images/vf2.png';
-import imageUntitled1 from '/assets/images/untitled1.png';
-import imageVf21 from '/assets/images/vf2.1.png';
+// Import des previews d'images pour les thumbnails
+import campfirePreview from '/dino-reunion-portfolio/assets/portfolio/Annexe/campfire_preview.png';
+import boxPreview from '/dino-reunion-portfolio/assets/portfolio/Annexe/box_preview.png';
+import cyclingPreview from '/dino-reunion-portfolio/assets/portfolio/Annexe/cyclingPreview.png';
+import carPreview from '/dino-reunion-portfolio/assets/portfolio/Annexe/CarAnimPreview.png';
 
 const VideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef(null);
 
   // Vidéos représentant le travail d'Emmanuel
   const videos = [
     {
       id: 1,
-      title: 'Mobilier 3D - Association Ti Planteur',
-      description: 'Présentation des plans 3D de mobilier conçus pour l\'association',
-      thumbnail: imageVf2,
-      duration: '2:15',
+      title: 'Animation Feu de Camp - Environnement 3D',
+      description: 'Animation d\'un feu de camp réalisée dans le cadre de projets éducatifs sur l\'environnement',
+      thumbnail: campfirePreview,
+      videoSrc: '/dino-reunion-portfolio/assets/portfolio/Annexe/CampfireVideo.mp4',
+      duration: '0:45',
     },
     {
       id: 2,
-      title: 'Concepts et Développement',
-      description: 'Processus de création et évolution des designs',
-      thumbnail: imageUntitled1,
-      duration: '3:20',
+      title: 'Modélisation 3D - Boîte Interactive',
+      description: 'Conception et animation d\'une boîte 3D avec interactions dynamiques',
+      thumbnail: boxPreview,
+      videoSrc: '/dino-reunion-portfolio/assets/portfolio/Annexe/boxe.mp4',
+      duration: '1:20',
     },
     {
       id: 3,
-      title: 'Finalisation des Projets',
-      description: 'Versions finales et détails techniques des créations',
-      thumbnail: imageVf21,
-      duration: '1:45',
+      title: 'Animation Cyclisme - Mouvement Réaliste',
+      description: 'Animation de personnage en cyclisme avec attention aux détails de mouvement',
+      thumbnail: cyclingPreview,
+      videoSrc: '/dino-reunion-portfolio/assets/portfolio/Annexe/cycling.mp4',
+      duration: '2:10',
+    },
+    {
+      id: 4,
+      title: 'Animation Véhicule - Séquence Dynamique',
+      description: 'Animation de véhicule avec effets visuels et mouvements fluides',
+      thumbnail: carPreview,
+      videoSrc: '/dino-reunion-portfolio/assets/portfolio/Annexe/car_animation_0000.mp4',
+      duration: '1:30',
     },
   ];
 
   const [selectedVideo, setSelectedVideo] = useState(videos[0]);
 
-  const togglePlay = () => {
-    setIsPlaying(!isPlaying);
+  const togglePlay = async () => {
+    if (videoRef.current) {
+      try {
+        if (isPlaying) {
+          videoRef.current.pause();
+          setIsPlaying(false);
+        } else {
+          await videoRef.current.play();
+          setIsPlaying(true);
+        }
+      } catch (error) {
+        console.error('Erreur lors de la lecture de la vidéo:', error);
+        setIsPlaying(false);
+      }
+    }
   };
 
   const toggleMute = () => {
-    setIsMuted(!isMuted);
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
+  const handleVideoChange = (video) => {
+    setSelectedVideo(video);
+    setIsPlaying(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
   };
 
   return (
@@ -75,22 +113,43 @@ const VideoSection = () => {
             className="lg:col-span-2"
           >
             <div className="relative bg-slate-800 rounded-xl overflow-hidden shadow-2xl">
-              {/* Placeholder vidéo avec vraie image */}
+              {/* Lecteur vidéo avec vraie vidéo */}
               <div className="aspect-video bg-gradient-to-br from-volcanic-orange-900 to-forest-green-900 flex items-center justify-center relative overflow-hidden">
-                <img
-                  src={selectedVideo.thumbnail}
-                  alt={selectedVideo.title}
-                  className="absolute inset-0 w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
+                {/* Image de preview affichée quand la vidéo n'est pas en cours de lecture */}
+                {!isPlaying && (
+                  <img
+                    src={selectedVideo.thumbnail}
+                    alt={selectedVideo.title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                )}
+                
+                <video
+                  ref={videoRef}
+                  src={selectedVideo.videoSrc}
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+                    isPlaying ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  muted={isMuted}
+                  controls={false}
+                  preload="metadata"
+                  playsInline
+                  onLoadedMetadata={() => {
+                    if (videoRef.current) {
+                      videoRef.current.currentTime = 0;
+                    }
                   }}
+                  onEnded={() => setIsPlaying(false)}
+                  onPlay={() => setIsPlaying(true)}
+                  onPause={() => setIsPlaying(false)}
                 />
-                <div className="absolute inset-0 bg-black/30" />
+                
+                <div className={`absolute inset-0 bg-black/30 transition-opacity duration-300 ${isPlaying ? 'opacity-0' : 'opacity-100'}`} />
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={togglePlay}
-                  className="relative z-10 w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300"
+                  className={`relative z-10 w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 ${isPlaying ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
                 >
                   {isPlaying ? <Pause size={32} /> : <Play size={32} className="ml-1" />}
                 </motion.button>
@@ -143,7 +202,7 @@ const VideoSection = () => {
               <motion.div
                 key={video.id}
                 whileHover={{ scale: 1.02 }}
-                onClick={() => setSelectedVideo(video)}
+                onClick={() => handleVideoChange(video)}
                 className={`cursor-pointer rounded-lg overflow-hidden transition-all duration-300 ${
                   selectedVideo.id === video.id
                     ? 'ring-2 ring-volcanic-orange-500 bg-slate-700'
