@@ -161,7 +161,9 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 1 }}
               className="text-lg lg:text-xl text-gray-300 mb-6 lg:mb-8 leading-relaxed"
             >
-              {portfolioData.personal.title}
+              Spécialisé en <span className="text-volcanic-orange-400 font-semibold">animation 3D & synthèse d'image</span>
+              <br />
+              Créateur d'univers virtuels depuis La Réunion
             </motion.p>
             
             <motion.div
@@ -170,18 +172,30 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 1.2 }}
               className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
-              <a 
-                href="#portfolio" 
-                className="bg-volcanic-orange-500 hover:bg-volcanic-orange-600 text-white px-6 lg:px-8 py-3 lg:py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+              <button 
+                onClick={() => {
+                  const element = document.getElementById('galerie');
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="bg-volcanic-orange-500 hover:bg-volcanic-orange-600 text-white px-6 lg:px-8 py-3 lg:py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 flex items-center space-x-2"
               >
-                Découvrir mon travail
-              </a>
-              <a 
-                href="#contact" 
-                className="border border-volcanic-orange-500 text-volcanic-orange-500 hover:bg-volcanic-orange-500 hover:text-white px-6 lg:px-8 py-3 lg:py-4 rounded-lg font-semibold transition-all duration-300"
+                <span>🎨</span>
+                <span>Explorer mes créations 3D</span>
+              </button>
+              <button 
+                onClick={() => {
+                  const element = document.getElementById('contact');
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="border border-volcanic-orange-500 text-volcanic-orange-500 hover:bg-volcanic-orange-500 hover:text-white px-6 lg:px-8 py-3 lg:py-4 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2"
               >
-                Me contacter
-              </a>
+                <span>💬</span>
+                <span>Discutons de votre projet</span>
+              </button>
             </motion.div>
             
             <motion.div
@@ -193,7 +207,7 @@ const Hero = () => {
               <div className="inline-flex items-center space-x-2 bg-slate-800/50 backdrop-blur-sm rounded-full px-3 py-1 lg:px-4 lg:py-2 border border-volcanic-orange-500/20">
                 <div className="w-2 h-2 bg-volcanic-orange-400 rounded-full animate-pulse"></div>
                 <span className="text-gray-400 text-xs lg:text-sm">
-                  Portfolio interactif avec scènes 3D simples
+                  Portfolio interactif • Modélisation 3D • Animation • Rendu
                 </span>
               </div>
             </motion.div>
