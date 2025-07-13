@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { Calendar, MapPin, Award, Code, User } from 'lucide-react';
+import { Calendar, MapPin, Award, Code, User, X, ZoomIn } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import portfolioData from '../data/portfolio.json';
 
 // Variantes d'animation optimisées - durées courtes et fluides
@@ -27,6 +28,31 @@ const itemVariants = {
 };
 
 const About = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  // Gestion de la touche Escape pour fermer le modal
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape' && isModalOpen) {
+        closeModal();
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener('keydown', handleEscape);
+      // Empêcher le scroll en arrière-plan
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isModalOpen]);
+
   return (
     <section id="apropos" className="min-h-screen bg-gradient-to-b from-slate-800 to-slate-900 py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -207,18 +233,25 @@ const About = () => {
               </h3>
               
               <div className="flex items-center space-x-4">
-                <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                <div 
+                  className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 relative group cursor-pointer"
+                  onClick={openModal}
+                >
                   <img 
                     src="/assets/new_assets/Certification SonyPicture Animation.jpeg" 
                     alt="Certification Sony Pictures Animation"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                     loading="lazy"
                   />
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <ZoomIn size={20} className="text-white" />
+                  </div>
                 </div>
                 <div>
                   <h4 className="text-white font-semibold">Sony Pictures Animation</h4>
                   <p className="text-yellow-400 text-sm font-medium">Certification en Animation 3D</p>
                   <p className="text-gray-400 text-sm">Formation professionnelle en techniques d'animation avancées</p>
+                  <p className="text-gray-500 text-xs mt-1 italic">Cliquez sur l'image pour l'agrandir</p>
                 </div>
               </div>
             </motion.div>
@@ -282,6 +315,57 @@ const About = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Modal de zoom pour la certification */}
+      {isModalOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+          onClick={closeModal}
+        >
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="relative max-w-4xl max-h-[90vh] p-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Bouton de fermeture */}
+            <button
+              onClick={closeModal}
+              className="absolute -top-2 -right-2 z-10 bg-slate-800 hover:bg-slate-700 text-white rounded-full p-2 transition-colors duration-200"
+            >
+              <X size={20} />
+            </button>
+
+            {/* Image agrandie */}
+            <div className="bg-white rounded-lg overflow-hidden shadow-2xl">
+              <img
+                src="/assets/new_assets/Certification SonyPicture Animation.jpeg"
+                alt="Certification Sony Pictures Animation - Vue détaillée"
+                className="w-full h-full object-contain max-h-[80vh]"
+              />
+            </div>
+
+            {/* Informations sur la certification */}
+            <div className="mt-4 text-center">
+              <h3 className="text-xl font-bold text-white mb-2">
+                Certification Sony Pictures Animation
+              </h3>
+              <p className="text-yellow-400 font-medium mb-1">
+                Certification en Animation 3D
+              </p>
+              <p className="text-gray-300 text-sm">
+                Formation professionnelle en techniques d'animation avancées
+              </p>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
     </section>
   );
 };
