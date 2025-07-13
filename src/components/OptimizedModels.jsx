@@ -3,22 +3,25 @@ import { useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
+// Import direct du modèle comme asset Vite
+import maximusModel from '../assets/MAXIMUS_SCULPT1.glb?url';
+
 // Configuration d'optimisation pour les modèles
 const MODEL_CONFIG = {
   DINO: {
-    path: '/dino-reunion-portfolio/assets/new_assets/MAXIMUS_SCULPT1.glb',
+    path: maximusModel,
     scale: 0.5,
     maxFaces: 10000,
     compressionLevel: 0.8
   },
   MAXIMUS: {
-    path: '/dino-reunion-portfolio/assets/new_assets/MAXIMUS_SCULPT1.glb',
+    path: maximusModel,
     scale: 0.5,
     maxFaces: 8000,
     compressionLevel: 0.7
   },
   CHEVAL: {
-    path: '/dino-reunion-portfolio/assets/new_assets/MAXIMUS_SCULPT1.glb',
+    path: maximusModel,
     scale: 0.5,
     maxFaces: 6000,
     compressionLevel: 0.6

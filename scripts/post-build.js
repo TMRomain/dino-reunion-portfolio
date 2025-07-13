@@ -8,16 +8,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const projectRoot = join(__dirname, '..');
 
-// Assets à copier depuis public/ vers dist/
+// Assets à copier depuis public/ vers dist/ (les GLB sont maintenant gérés par Vite)
 const assetsToCopy = [
-  {
-    src: 'public/assets/new_assets/MAXIMUS_SCULPT1.glb',
-    dest: 'dist/assets/new_assets/MAXIMUS_SCULPT1.glb'
-  },
-  {
-    src: 'public/assets/new_assets/MAXIMUS_SCULPT.glb',
-    dest: 'dist/assets/new_assets/MAXIMUS_SCULPT.glb'
-  }
+  // Les modèles GLB sont maintenant importés comme assets Vite
+  // Pas besoin de les copier manuellement
 ];
 
 console.log('🔧 Post-build: Copie des assets manquants...');
