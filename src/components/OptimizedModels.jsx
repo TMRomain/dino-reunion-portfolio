@@ -6,19 +6,19 @@ import * as THREE from 'three';
 // Configuration d'optimisation pour les modèles
 const MODEL_CONFIG = {
   DINO: {
-    path: '/assets/new_assets/DINO.glb',
-    scale: 0.5,
+    path: '/assets/new_assets/MAXIMUS_SCULPT1.glb',
+    scale: 0.8,
     maxFaces: 10000,
     compressionLevel: 0.8
   },
   MAXIMUS: {
-    path: '/assets/new_assets/MAXIMUS_SCULPT.glb',
+    path: '/assets/new_assets/MAXIMUS_SCULPT1.glb',
     scale: 1.5,
     maxFaces: 8000,
     compressionLevel: 0.7
   },
   CHEVAL: {
-    path: '/assets/new_assets/chevala5.glb',
+    path: '/assets/new_assets/MAXIMUS_SCULPT1.glb',
     scale: 1.2,
     maxFaces: 6000,
     compressionLevel: 0.6
