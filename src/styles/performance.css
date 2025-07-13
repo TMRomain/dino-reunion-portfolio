@@ -1,0 +1,115 @@
+/* Optimisations de performance globales pour les animations */
+
+/* Optimisations hardware acceleration pour les éléments animés */
+.motion-element {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Classes d'optimisation pour framer-motion */
+[data-framer-component] {
+  will-change: transform, opacity;
+}
+
+/* Réduction des transitions pour les appareils avec préférences de mouvement réduit */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optimisations pour le scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optimisations pour les images */
+img {
+  content-visibility: auto;
+}
+
+/* Optimisations pour les sections */
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
+}
+
+/* Optimisations pour les transformations 3D */
+.canvas-3d {
+  transform: translateZ(0);
+  will-change: transform;
+  contain: layout;
+}
+
+/* Classes utilitaires pour les animations rapides */
+.fast-fade-in {
+  animation: fastFadeIn 0.3s ease-out forwards;
+}
+
+.fast-slide-up {
+  animation: fastSlideUp 0.4s ease-out forwards;
+}
+
+@keyframes fastFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fastSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Optimisations pour le lazy loading */
+.lazy-loading {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.lazy-loaded {
+  opacity: 1;
+}
+
+/* Spinner optimisé */
+.fast-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Optimisations pour les grilles et layouts */
+.optimized-grid {
+  contain: layout;
+  content-visibility: auto;
+}
+
+/* Réduction des reflows avec contain */
+.motion-container {
+  contain: layout style paint;
+}

@@ -4,6 +4,40 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Optimisations de performance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Hardware acceleration pour les éléments animés */
+.motion-element {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Classes d'optimisation pour framer-motion */
+[data-framer-component] {
+  will-change: transform, opacity;
+}
+
+/* Classes utilitaires pour animations rapides */
+.fast-fade-in {
+  animation: fastFadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fastFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 * {
   box-sizing: border-box;
 }

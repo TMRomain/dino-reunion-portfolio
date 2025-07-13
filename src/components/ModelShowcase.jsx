@@ -1,68 +1,17 @@
 import { Suspense, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Environment, ContactShadows, Text, OrbitControls } from '@react-three/drei';
+import { Environment, ContactShadows, OrbitControls } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import WebGLErrorBoundary from './WebGLErrorBoundary';
 import { useWebGL } from '../utils/webgl';
+import { DinoGLTFModel, MaximusModel, ChevalModel, ModelLoader } from './RealModels';
 
-// Composant de démonstration pour montrer un exemple de modèle 3D plus élaboré
-const EnhancedDinoModel = ({ position = [0, 0, 0], modelType = 'trex' }) => {
-  const [hovered, setHovered] = useState(false);
-  
-  // Couleurs selon le type de dinosaure
-  const colors = {
-    trex: '#8b5a3c',
-    tricera: '#4a7c59',
-    brachio: '#6b7280',
-  };
-
+// Composant pour afficher les vrais modèles 3D
+const EnhancedRealModel = ({ ModelComponent, position = [0, 0, 0], name = "Modèle", scale = 1 }) => {
   return (
-    <group position={position}>
-      {/* Corps principal avec effet hover */}
-      <mesh
-        onPointerOver={() => setHovered(true)}
-        onPointerOut={() => setHovered(false)}
-        scale={hovered ? 1.1 : 1}
-        castShadow
-      >
-        <boxGeometry args={[2, 3, 1]} />
-        <meshStandardMaterial 
-          color={colors[modelType]} 
-          roughness={0.3} 
-          metalness={0.1}
-          emissive={hovered ? '#333' : '#000'}
-        />
-      </mesh>
-      
-      {/* Yeux lumineux */}
-      <mesh position={[-0.3, 1.2, 0.6]}>
-        <sphereGeometry args={[0.1]} />
-        <meshStandardMaterial 
-          color="#ff4444" 
-          emissive="#ff0000" 
-          emissiveIntensity={hovered ? 0.8 : 0.3} 
-        />
-      </mesh>
-      <mesh position={[0.3, 1.2, 0.6]}>
-        <sphereGeometry args={[0.1]} />
-        <meshStandardMaterial 
-          color="#ff4444" 
-          emissive="#ff0000" 
-          emissiveIntensity={hovered ? 0.8 : 0.3} 
-        />
-      </mesh>
-      
-      {/* Nom flottant */}
-      <Text
-        position={[0, 2.5, 0]}
-        fontSize={0.3}
-        color="#ffffff"
-        anchorX="center"
-        anchorY="middle"
-      >
-        {modelType.toUpperCase()}
-      </Text>
-    </group>
+    <ModelLoader name={name}>
+      <ModelComponent position={position} scale={scale} />
+    </ModelLoader>
   );
 };
 
@@ -73,16 +22,7 @@ const ModelShowcase = () => {
   // Approche optimiste : n'afficher le fallback que si WebGL est vraiment indisponible
   const shouldShowFallback = !isLoading && isSupported === false;
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-900 to-black p-8 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-8 h-8 border-2 border-volcanic-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-300">Chargement des modèles 3D...</p>
-        </div>
-      </div>
-    );
-  }
+  // Suppression du loading state CSS - uniquement Three.js loading
 
   if (shouldShowFallback) {
     return (
@@ -144,7 +84,12 @@ const ModelShowcase = () => {
                     <directionalLight position={[5, 5, 5]} intensity={1} />
                     <Environment preset="sunset" />
                     
-                    <EnhancedDinoModel position={[0, -1, 0]} modelType="trex" />
+                    <EnhancedRealModel 
+                      ModelComponent={DinoGLTFModel} 
+                      position={[0, -1, 0]} 
+                      name="Dinosaure" 
+                      scale={2}
+                    />
                     
                     <ContactShadows
                       position={[0, -2, 0]}
@@ -166,8 +111,8 @@ const ModelShowcase = () => {
             </WebGLErrorBoundary>
             </div>
             <div className="p-4">
-              <h3 className="text-xl font-bold text-white">T-Rex</h3>
-              <p className="text-gray-400 text-sm">Le roi des prédateurs au Piton de la Fournaise</p>
+              <h3 className="text-xl font-bold text-white">Dinosaure DINO</h3>
+              <p className="text-gray-400 text-sm">Création originale Blender - Modèle 3D complet</p>
             </div>
           </div>
 
@@ -184,7 +129,12 @@ const ModelShowcase = () => {
                     <directionalLight position={[5, 5, 5]} intensity={1} />
                     <Environment preset="forest" />
                     
-                    <EnhancedDinoModel position={[0, -1, 0]} modelType="tricera" />
+                    <EnhancedRealModel 
+                      ModelComponent={MaximusModel} 
+                      position={[0, -1, 0]} 
+                      name="Maximus" 
+                      scale={1.5}
+                    />
                     
                     <ContactShadows
                       position={[0, -2, 0]}
@@ -206,8 +156,8 @@ const ModelShowcase = () => {
               </WebGLErrorBoundary>
             </div>
             <div className="p-4">
-              <h3 className="text-xl font-bold text-white">Tricératops</h3>
-              <p className="text-gray-400 text-sm">Herbivore paisible dans les Hauts de l'île</p>
+              <h3 className="text-xl font-bold text-white">Maximus Sculpt</h3>
+              <p className="text-gray-400 text-sm">Sculpture numérique détaillée - Modélisation avancée</p>
             </div>
           </div>
 
@@ -224,7 +174,12 @@ const ModelShowcase = () => {
                     <directionalLight position={[5, 5, 5]} intensity={1} />
                     <Environment preset="dawn" />
                     
-                    <EnhancedDinoModel position={[0, -1, 0]} modelType="brachio" />
+                    <EnhancedRealModel 
+                      ModelComponent={ChevalModel} 
+                      position={[0, -1, 0]} 
+                      name="Cheval" 
+                      scale={1.2}
+                    />
                     
                     <ContactShadows
                       position={[0, -2, 0]}
@@ -246,8 +201,8 @@ const ModelShowcase = () => {
               </WebGLErrorBoundary>
             </div>
             <div className="p-4">
-              <h3 className="text-xl font-bold text-white">Brachiosaure</h3>
-              <p className="text-gray-400 text-sm">Géant aux cou long parcourant les cirques</p>
+              <h3 className="text-xl font-bold text-white">Cheval Stylisé</h3>
+              <p className="text-gray-400 text-sm">Modèle équin artistique - Approche stylisée</p>
             </div>
           </div>
         </div>

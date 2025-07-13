@@ -28,8 +28,8 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full ${
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 w-full ${
         isScrolled
           ? 'bg-slate-900/90 backdrop-blur-md border-b border-volcanic-orange-500/20'
           : 'bg-transparent'
@@ -39,11 +39,15 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16 w-full">
           {/* Logo */}
           <motion.div
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.02 }}
             className="flex items-center space-x-2 flex-shrink-0"
           >
-            <div className="w-8 h-8 bg-gradient-to-br from-volcanic-orange-500 to-forest-green-500 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg"></span>
+            <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+              <img 
+                src="/assets/new_assets/PhotoEmanuel.jpeg" 
+                alt="Emmanuel"
+                className="w-full h-full object-cover"
+              />
             </div>
             <span className="text-white font-bold text-xl hidden sm:block">{portfolioData.personal.name}</span>
             <span className="text-white font-bold text-lg sm:hidden">Emmanuel</span>
@@ -54,13 +58,13 @@ const Navbar = () => {
             {['Accueil', 'À propos', 'Galerie', 'Vidéo', 'Contact'].map((item) => (
               <motion.button
                 key={item}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => {
                   const sectionId = item === 'À propos' ? 'apropos' : item.toLowerCase();
                   scrollToSection(sectionId);
                 }}
-                className="text-white hover:text-volcanic-orange-400 transition-colors duration-200 font-medium whitespace-nowrap"
+                className="text-white hover:text-volcanic-orange-400 transition-colors duration-150 font-medium whitespace-nowrap"
               >
                 {item}
               </motion.button>
@@ -79,9 +83,10 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
             className="md:hidden bg-slate-900/95 backdrop-blur-md rounded-lg mt-2 p-4"
           >
             {['Accueil', 'À propos', 'Galerie', 'Vidéo', 'Contact'].map((item) => (
@@ -90,8 +95,9 @@ const Navbar = () => {
                 onClick={() => {
                   const sectionId = item === 'À propos' ? 'apropos' : item.toLowerCase();
                   scrollToSection(sectionId);
+                  setIsMobileMenuOpen(false);
                 }}
-                className="block w-full text-left text-white hover:text-volcanic-orange-400 transition-colors duration-200 font-medium py-2"
+                className="block w-full text-left text-white hover:text-volcanic-orange-400 transition-colors duration-150 font-medium py-2"
               >
                 {item}
               </button>

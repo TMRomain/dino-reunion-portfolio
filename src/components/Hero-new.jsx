@@ -191,17 +191,8 @@ const Hero = () => {
 
         {/* Simple 3D Scene section */}
         <div className="flex-1 relative min-h-[50vh] lg:min-h-0 w-full max-w-full overflow-hidden">
-          {isLoading ? (
-            // Loading state - très court
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800">
-              <div className="text-center">
-                <div className="w-8 h-8 border-2 border-volcanic-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                <p className="text-gray-300">Chargement de la scène 3D...</p>
-              </div>
-            </div>
-          ) : (
-            // Toujours afficher la scène 3D - WebGLErrorBoundary s'occupera des erreurs
-            <WebGLErrorBoundary
+          {/* Suppression du loading state CSS - uniquement Three.js loading */}
+          <WebGLErrorBoundary
               fallback={
                 <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800">
                   <div className="text-center p-8">
@@ -238,7 +229,6 @@ const Hero = () => {
                 </Suspense>
               </Canvas>
             </WebGLErrorBoundary>
-          )}
         </div>
       </div>
 
