@@ -7,19 +7,19 @@ import * as THREE from 'three';
 const MODEL_CONFIG = {
   DINO: {
     path: '/assets/new_assets/MAXIMUS_SCULPT1.glb',
-    scale: 0.8,
+    scale: 0.5,
     maxFaces: 10000,
     compressionLevel: 0.8
   },
   MAXIMUS: {
     path: '/assets/new_assets/MAXIMUS_SCULPT1.glb',
-    scale: 1.5,
+    scale: 0.5,
     maxFaces: 8000,
     compressionLevel: 0.7
   },
   CHEVAL: {
     path: '/assets/new_assets/MAXIMUS_SCULPT1.glb',
-    scale: 1.2,
+    scale: 0.5,
     maxFaces: 6000,
     compressionLevel: 0.6
   }
