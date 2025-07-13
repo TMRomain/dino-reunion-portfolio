@@ -3,6 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, MapPin, Award, Code, User, Heart, X, ZoomIn } from 'lucide-react';
 import portfolioData from '../data/portfolio.json';
 
+// Import des images
+import photoEmanuel from '../assets/images/PhotoEmanuel.jpeg';
+import certificationSony from '../assets/images/Certification SonyPicture Animation.jpeg';
+
 const About = () => {
   const [showCertificationModal, setShowCertificationModal] = useState(false);
 
@@ -38,7 +42,7 @@ const About = () => {
               <div className="flex items-center space-x-4 mb-6">
                 <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
                   <img 
-                    src="/assets/new_assets/PhotoEmanuel.jpeg" 
+                    src={photoEmanuel} 
                     alt="Emmanuel"
                     className="w-full h-full object-cover"
                   />
@@ -175,7 +179,7 @@ const About = () => {
                   onClick={() => setShowCertificationModal(true)}
                 >
                   <img 
-                    src="/assets/new_assets/Certification SonyPicture Animation.jpeg" 
+                    src={certificationSony} 
                     alt="Certification Sony Pictures Animation"
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
@@ -288,7 +292,7 @@ const About = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <img
-                src="/assets/new_assets/Certification SonyPicture Animation.jpeg"
+                src={certificationSony}
                 alt="Certification Sony Pictures Animation"
                 className="w-full h-auto max-h-[70vh] object-contain"
               />

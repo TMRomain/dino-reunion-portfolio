@@ -5,4 +5,5 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: process.env.NODE_ENV === 'production' ? '/dino-reunion-portfolio/' : '/',
+  assetsInclude: ['**/*.glb', '**/*.gltf'], // Include GLB files as assets
 })

@@ -3,6 +3,9 @@ import { Menu, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import portfolioData from '../data/portfolio.json';
 
+// Import de l'image
+import photoEmanuel from '../assets/images/PhotoEmanuel.jpeg';
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -44,7 +47,7 @@ const Navbar = () => {
           >
             <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
               <img 
-                src="/assets/new_assets/PhotoEmanuel.jpeg" 
+                src={photoEmanuel} 
                 alt="Emmanuel"
                 className="w-full h-full object-cover"
               />
