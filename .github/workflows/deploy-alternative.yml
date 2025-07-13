@@ -17,6 +17,18 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Git LFS Pull
+        run: git lfs pull
+
+      - name: Verify GLB files
+        run: |
+          echo "Checking GLB files:"
+          find . -name "*.glb" -exec ls -la {} \;
+          echo "Checking if GLB files are LFS pointers:"
+          find . -name "*.glb" -exec head -1 {} \;
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
